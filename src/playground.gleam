@@ -33,11 +33,15 @@ const public_precompiled = "public/precompiled"
 
 const prelude = "build/dev/javascript/prelude.mjs"
 
+const prelude_nix = "build/dev/nix/prelude.nix"
+
 const stdlib_compiled = "build/dev/javascript/gleam_stdlib/gleam"
 
-const stdlib_sources = "build/packages/gleam_stdlib/src/gleam"
+const stdlib_compiled_nix = "build/dev/nix/gleam_stdlib/gleam"
 
-const stdlib_external = "build/packages/gleam_stdlib/src"
+const stdlib_sources = "external/stdlib/src/gleam"
+
+const stdlib_external = "external/stdlib/src"
 
 const compiler_wasm = "./wasm-compiler"
 
@@ -107,8 +111,13 @@ fn make_prelude_available() -> snag.Result(Nil) {
     |> file_error("Failed to make " <> public_precompiled),
   )
 
-  simplifile.copy_file(prelude, public_precompiled <> "/gleam.mjs")
-  |> file_error("Failed to copy prelude.mjs")
+  use _ <- result.try(
+    simplifile.copy_file(prelude, public_precompiled <> "/gleam.mjs")
+    |> file_error("Failed to copy prelude.mjs"),
+  )
+
+  simplifile.copy_file(prelude_nix, public_precompiled <> "/gleam.nix")
+  |> file_error("Failed to copy prelude.nix")
 }
 
 fn make_stdlib_available() -> snag.Result(Nil) {
@@ -145,7 +154,10 @@ fn copy_stdlib_externals() -> snag.Result(Nil) {
     simplifile.read_directory(stdlib_external)
     |> file_error("Failed to read stdlib external directory"),
   )
-  let files = list.filter(files, string.ends_with(_, ".mjs"))
+  let files =
+    list.filter(files, fn(file) {
+      string.ends_with(file, ".mjs") || string.ends_with(file, ".nix")
+    })
 
   list.try_each(files, fn(file) {
     let from = stdlib_external <> "/" <> file
@@ -160,9 +172,17 @@ fn copy_compiled_stdlib(modules: List(String)) -> snag.Result(Nil) {
     simplifile.is_directory(stdlib_compiled)
     |> file_error("Failed to check stdlib directory"),
   )
+  use stdlib_nix_dir_exists <- result.try(
+    simplifile.is_directory(stdlib_compiled_nix)
+    |> file_error("Failed to check stdlib nix directory"),
+  )
   use <- require(
     stdlib_dir_exists,
     "Project must have been compiled for JavaScript",
+  )
+  use <- require(
+    stdlib_nix_dir_exists,
+    "Project must have been compiled for Nix",
   )
 
   let dest = public_precompiled <> "/gleam"
@@ -175,8 +195,15 @@ fn copy_compiled_stdlib(modules: List(String)) -> snag.Result(Nil) {
     list.try_each(modules, fn(name) {
       let from = stdlib_compiled <> "/" <> name <> ".mjs"
       let to = dest <> "/" <> name <> ".mjs"
-      simplifile.copy_file(from, to)
-      |> file_error("Failed to copy stdlib module " <> from)
+      let from_nix = stdlib_compiled_nix <> "/" <> name <> ".nix"
+      let to_nix = dest <> "/" <> name <> ".nix"
+
+      use _ <- result.try(
+        simplifile.copy_file(from, to)
+        |> file_error("Failed to copy stdlib module " <> from),
+      )
+      simplifile.copy_file(from_nix, to_nix)
+      |> file_error("Failed to copy stdlib nix module " <> from_nix)
     }),
   )
 
@@ -367,6 +394,7 @@ fn home_page() -> Html {
           h("div", [#("id", "output-container")], [
             h("div", [#("id", "tabs")], [
               output_tab("Output", "output-radio", "output", True),
+              output_tab("Compiled Nix", "compiled-nix-radio", "nix", False),
               output_tab(
                 "Compiled Erlang",
                 "compiled-erlang-radio",
@@ -382,6 +410,7 @@ fn home_page() -> Html {
               h("button", [#("id", "share-button")], [htmb.text("Share code")]),
             ]),
             output_container("output", "output"),
+            output_container("compiled-nix", "output language-nix"),
             output_container("compiled-erlang", "output language-erlang"),
             output_container(
               "compiled-javascript",

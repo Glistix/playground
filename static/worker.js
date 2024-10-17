@@ -38,6 +38,7 @@ async function compileEval(code) {
     js: null,
     erlang: null,
     error: null,
+    nix: null,
     warnings: [],
   };
 
@@ -47,11 +48,14 @@ async function compileEval(code) {
     const js = project.readCompiledJavaScript("main");
     project.compilePackage("erlang");
     const erlang = project.readCompiledErlang("main");
+    project.compilePackage("nix");
+    const nix = project.readCompiledNix("main");
     const main = await loadProgram(js);
     if (main) main();
 
     result.js = js;
     result.erlang = erlang;
+    result.nix = nix;
   } catch (error) {
     console.error(error);
     result.error = error.toString();

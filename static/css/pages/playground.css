@@ -93,6 +93,10 @@
   display: block;
 }
 
+#output-container:has(#compiled-nix-radio:checked) > #compiled-nix {
+  display: block;
+}
+
 #share-button {
   padding: var(--gap-half) var(--gap);
   border: none;

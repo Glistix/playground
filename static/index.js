@@ -2,6 +2,7 @@ import CodeFlask from "https://cdn.jsdelivr.net/npm/codeflask@1.4.1/+esm";
 import hljs from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/es/highlight.min.js";
 import js from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/es/languages/javascript.min.js";
 import erlang from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/es/languages/erlang.min.js";
+import nix from "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/es/languages/nix.min.js";
 import lz from "https://cdn.jsdelivr.net/npm/lz-string@1.5.0/+esm";
 
 globalThis.CodeFlask = CodeFlask;
@@ -9,10 +10,12 @@ globalThis.hljs = hljs;
 
 hljs.registerLanguage("javascript", js);
 hljs.registerLanguage("erlang", erlang);
+hljs.registerLanguage("nix", nix);
 
 const outputEl = document.querySelector("#output");
 const compiledJavascriptEl = document.querySelector("#compiled-javascript");
 const compiledErlangEl = document.querySelector("#compiled-erlang");
+const compiledNixEl = document.querySelector("#compiled-nix");
 const initialCode = document.querySelector("#code").innerHTML;
 
 const prismGrammar = {
@@ -67,7 +70,7 @@ function appendCode(target, content, className) {
 function highlightOutput(target, childClassName) {
   // Disable annoying warnings from hljs
   const warn = console.warn;
-  console.warn = () => { };
+  console.warn = () => {};
   target.querySelectorAll(`.${childClassName}`).forEach((element) => {
     hljs.highlightElement(element);
   });
@@ -112,6 +115,7 @@ worker.onmessage = (event) => {
   clearElement(outputEl);
   clearElement(compiledJavascriptEl);
   clearElement(compiledErlangEl);
+  clearElement(compiledNixEl);
   if (result.log) {
     appendCode(outputEl, result.log, "log");
   }
@@ -124,12 +128,16 @@ worker.onmessage = (event) => {
   if (result.erlang) {
     appendCode(compiledErlangEl, result.erlang, "erlang");
   }
+  if (result.nix) {
+    appendCode(compiledNixEl, result.nix, "nix");
+  }
   for (const warning of result.warnings || []) {
     appendCode(outputEl, warning, "warning");
   }
 
   highlightOutput(compiledJavascriptEl, "javascript");
   highlightOutput(compiledErlangEl, "erlang");
+  highlightOutput(compiledNixEl, "nix");
 
   // Deal with any queued work
   workerWorking = false;

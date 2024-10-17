@@ -1,7 +1,7 @@
 let compiler;
 
 export default async function initGleamCompiler() {
-  const wasm = await import("/compiler/gleam_wasm.js");
+  const wasm = await import("/compiler/glistix_wasm.js");
   await wasm.default();
   wasm.initialise_panic_hook();
   if (!compiler) {
@@ -69,6 +69,10 @@ class Project {
 
   readCompiledErlang(moduleName) {
     return compiler.wasm.read_compiled_erlang(this.#id, moduleName);
+  }
+
+  readCompiledNix(moduleName) {
+    return compiler.wasm.read_compiled_nix(this.#id, moduleName);
   }
 
   resetFilesystem() {
