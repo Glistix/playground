@@ -3,6 +3,7 @@
 
 packages = [
   { name = "filepath", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "filepath", source = "hex", outer_checksum = "EFB6FF65C98B2A16378ABC3EE2B14124168C0CE5201553DE652E2644DCFDB594" },
+  { name = "gleam_erlang", version = "0.30.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleam_erlang", source = "hex", outer_checksum = "760618870AE4A497B10C73548E6E44F43B76292A54F0207B3771CBB599C675B4" },
   { name = "gleam_stdlib", version = "0.38.0", build_tools = ["gleam"], requirements = [], source = "local", path = "external/stdlib" },
   { name = "glistix_gleeunit", version = "1.1.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "glistix_gleeunit", source = "hex", outer_checksum = "6FE984935DCF11DB7E4F2A6D1F8812334F30EBCC62A0CE718D22BA01F7777137" },
   { name = "htmb", version = "1.1.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "htmb", source = "hex", outer_checksum = "30D448F0E15DFCF7283AAAC2F351D77B9D54E318219C9FDDB1877572B67C27B7" },
@@ -12,6 +13,7 @@ packages = [
 
 [requirements]
 filepath = { version = ">= 1.0.0 and < 2.0.0" }
+gleam_erlang = { version = ">= 0.30.0 and < 1.0.0" }
 gleam_stdlib = { path = "./external/stdlib" }
 glistix_gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 htmb = { version = "~> 1.1" }

@@ -184,7 +184,7 @@ pub fn text_link(
 }
 
 /// Renders the playground's navbar as html
-pub fn navbar() -> Html {
+pub fn navbar(gleam_version: String) -> Html {
   h("nav", [#("class", "navbar")], [
     anchor("", [#("class", "logo")], [
       h(
@@ -196,7 +196,7 @@ pub fn navbar() -> Html {
         [],
       ),
       text("Glistix Playground"),
-      h("p", [#("class", "version-number")], [text("v1.6.1")]),
+      h("p", [#("class", "version-number")], [text(gleam_version)]),
     ]),
     h("div", [#("class", "nav-right")], [
       anchor("https://glistix.github.io/book", [#("class", "link")], [
