@@ -6,7 +6,7 @@ Based on https://github.com/gleam-lang/playground.
 
 ```sh
 # Download a wasm version of the Gleam compiler
-./bin/download-compiler
+GLEAM_VERSION=v1.6.1 ./bin/download-compiler
 
 # Build the site
 gleam run
