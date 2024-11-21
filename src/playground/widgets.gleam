@@ -196,6 +196,7 @@ pub fn navbar() -> Html {
         [],
       ),
       text("Glistix Playground"),
+      h("p", [#("class", "version-number")], [text("v1.6.1")]),
     ]),
     h("div", [#("class", "nav-right")], [
       anchor("https://glistix.github.io/book", [#("class", "link")], [
