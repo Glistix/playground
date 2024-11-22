@@ -2,8 +2,9 @@
 
 set -eu
 
+version=`cat ./GLEAM_VERSION`
+
 # Ensure you update the CI Gleam version to match this
-VERSION=$GLEAM_VERSION
 
 rm -fr wasm-compiler
 mkdir wasm-compiler
@@ -14,5 +15,5 @@ curl -L "https://github.com/user-attachments/files/18220133/glistix-v0.4.0-brows
 ###############################################
 
 # Correct code for Glistix v0.5.0:
-# curl -L "https://github.com/glistix/glistix/releases/download/$VERSION/glistix-$VERSION-browser.tar.gz" | tar xz
+# curl -L "https://github.com/glistix/glistix/releases/download/$version/glistix-$version-browser.tar.gz" | tar xz
 cd ..
