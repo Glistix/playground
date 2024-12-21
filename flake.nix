@@ -7,15 +7,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, utils }: utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs, utils, glistix }: utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
-      glistix = glistix.packages.${system}.default;
     in
     {
       devShell = pkgs.mkShell {
         buildInputs = [
-          glistix
+          glistix.packages.${system}.default
         ];
       };
     }
