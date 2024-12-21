@@ -8,5 +8,17 @@ VERSION="v0.4.0"
 rm -fr wasm-compiler
 mkdir wasm-compiler
 cd wasm-compiler
-curl -L "https://github.com/glistix/glistix/releases/download/$VERSION/glistix-$VERSION-browser.tar.gz" | tar xz
+
+### TEMPORARY WORKAROUND FOR GLISTIX v0.4.0 ###
+
+archivezip="$(mktemp)"
+curl -L "https://github.com/user-attachments/files/18220119/glistix-test-browser.zip" >$archivezip
+unzip $archivezip -d .
+tar xzf glistix-$VERSION-browser.tar.gz
+rm glistix-$VERSION-browser.tar.gz*
+
+###############################################
+
+# Correct code for Glistix v0.5.0:
+# curl -L "https://github.com/glistix/glistix/releases/download/$VERSION/glistix-$VERSION-browser.tar.gz" | tar xz
 cd ..
