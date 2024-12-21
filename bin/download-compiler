@@ -10,13 +10,7 @@ mkdir wasm-compiler
 cd wasm-compiler
 
 ### TEMPORARY WORKAROUND FOR GLISTIX v0.4.0 ###
-
-archivezip="$(mktemp)"
-curl -L "https://github.com/user-attachments/files/18220119/glistix-test-browser.zip" >$archivezip
-unzip $archivezip -d .
-tar xzf glistix-$VERSION-browser.tar.gz
-rm glistix-$VERSION-browser.tar.gz*
-
+curl -L "https://github.com/user-attachments/files/18220133/glistix-v0.4.0-browser.tar.gz" | tar xz
 ###############################################
 
 # Correct code for Glistix v0.5.0:
