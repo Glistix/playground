@@ -39,9 +39,11 @@ jobs:
       - name: Download WASM version of Glistix compiler
         run: ./bin/download-compiler
       - run: glistix deps download
-        shell: nix develop --command bash -e {0}
+        shell: nix develop -L --command bash -e {0}
+      # This will work even if compilation fails (as Lustre imports arent't valid on Nix)
+      # The main concern is generating files for deps and prelude
       - name: Generate Nix files
-        run: glistix build --target nix
+        run: glistix build --target nix | true
         shell: nix develop --command bash -e {0}
       - name: Build site
         run: glistix run
