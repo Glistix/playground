@@ -29,6 +29,9 @@ jobs:
         shell: nix develop --command bash -e {0}
       - run: glistix format --check src test
         shell: nix develop --command bash -e {0}
+      - name: Generate Nix files
+        run: glistix build --target nix
+        shell: nix develop --command bash -e {0}
       - run: glistix test
         shell: nix develop --command bash -e {0}
       - run: glistix run

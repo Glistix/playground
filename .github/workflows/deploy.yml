@@ -40,6 +40,9 @@ jobs:
         run: ./bin/download-compiler
       - run: glistix deps download
         shell: nix develop --command bash -e {0}
+      - name: Generate Nix files
+        run: glistix build --target nix
+        shell: nix develop --command bash -e {0}
       - name: Build site
         run: glistix run
         shell: nix develop --command bash -e {0}
