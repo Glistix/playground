@@ -195,10 +195,12 @@ pub fn navbar() -> Html {
         ],
         [],
       ),
-      text("Gleam Playground"),
+      text("Glistix Playground"),
     ]),
     h("div", [#("class", "nav-right")], [
-      anchor("https://gleam.run", [#("class", "link")], [text("gleam.run")]),
+      anchor("https://glistix.github.io/book", [#("class", "link")], [
+        text("Glistix"),
+      ]),
       theme_picker(),
     ]),
   ])
