@@ -7,7 +7,7 @@ Based on https://github.com/gleam-lang/playground.
 ```sh
 # Set the Glistix version in the GLEAM_VERSION file
 cat ./GLEAM_VERSION
-# v0.5.0
+# v0.6.0
 
 # Download a wasm version of the Gleam compiler
 ./bin/download-compiler
