@@ -50,17 +50,17 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1734819087,
-        "narHash": "sha256-pfebUwBzF67BTskFU5ma+wzqOliozW4pdvMq17Y+fZ4=",
+        "lastModified": 1737328970,
+        "narHash": "sha256-8rODOgggZFNDHJ1e3HgE0vNeE5rctEPh+q44lwJet4s=",
         "owner": "glistix",
         "repo": "glistix",
-        "rev": "43f85e95ef1a6cb59065dfeea52fd742e15be04d",
+        "rev": "a6e416d5ea500a2183279b0989b4c5c7ebdc1666",
         "type": "github"
       },
       "original": {
         "owner": "glistix",
+        "ref": "v0.6.0",
         "repo": "glistix",
-        "rev": "43f85e95ef1a6cb59065dfeea52fd742e15be04d",
         "type": "github"
       }
     },
