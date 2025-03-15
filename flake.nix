@@ -3,7 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs";
     utils.url = "github:numtide/flake-utils";
     glistix = {
-      url = "github:glistix/glistix/v0.6.0";
+      url = "github:glistix/glistix/v0.7.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
